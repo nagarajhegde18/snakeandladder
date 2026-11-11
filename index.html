@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Snakes & Ladders</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="menu" class="overlay">
+  <div class="card">
+    <h1>🐍 Snakes & Ladders 🪜</h1>
+    <p>Choose a mode</p>
+    <button data-mode="bot">Player vs Bot</button>
+    <button data-mode="2">2 Players</button>
+    <button data-mode="3">3 Players</button>
+    <button data-mode="4">4 Players</button>
+    <button id="editBtn" class="ghost">✏️ Customize Board</button>
+    <small id="boardLabel">Board: Classic</small>
+  </div>
+</div>
+
+<div id="editor" class="overlay" hidden>
+  <div class="card wide">
+    <h2>✏️ Customize Board</h2>
+    <label for="snakeIn">🐍 Snakes (head-tail, e.g. 17-7, 54-34)</label>
+    <textarea id="snakeIn" rows="3"></textarea>
+    <label for="ladderIn">🪜 Ladders (bottom-top, e.g. 4-25, 9-31)</label>
+    <textarea id="ladderIn" rows="3"></textarea>
+    <div id="err"></div>
+    <div class="row">
+      <button id="resetBoard" class="ghost">↩️ Reset to classic</button>
+      <button id="saveBoard">Save</button>
+    </div>
+    <button id="closeEditor" class="ghost">Back</button>
+  </div>
+</div>
+
+<main id="game" hidden>
+  <div id="board-wrap"><div id="board"></div></div>
+  <aside id="panel">
+    <div id="players"></div>
+    <div id="status"></div>
+    <div class="scene"><div id="dice" class="cube"></div></div>
+    <button id="rollBtn">🎲 Roll Dice</button>
+    <div class="row">
+      <button id="musicBtn" class="ghost">🎵 Music: On</button>
+      <button id="sfxBtn" class="ghost">🔊 SFX: On</button>
+    </div>
+    <button id="restart" class="ghost">New Game</button>
+  </aside>
+</main>
+
+<div id="win" class="overlay" hidden>
+  <div class="card"><h1 id="winText"></h1><button id="again">Play Again</button></div>
+</div>
+
+<script src="audio.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+*{box-sizing:border-box;margin:0}
+body{font-family:system-ui,sans-serif;background:radial-gradient(#2b5876,#1b2a49);color:#fff;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:10px}
+.overlay{position:fixed;inset:0;background:#000b;display:flex;align-items:center;justify-content:center;z-index:10;padding:10px;overflow:auto}
+.overlay[hidden],#game[hidden]{display:none}
+.card{background:#fff;color:#222;padding:28px;border-radius:18px;text-align:center;display:grid;gap:12px;min-width:280px}
+.card.wide{width:min(94vw,420px);text-align:left}
+.card.wide h2{text-align:center}
+.card label{font-weight:700;font-size:.9rem}
+.card small{color:#666}
+textarea{width:100%;padding:8px;border:2px solid #ccc;border-radius:8px;font:1rem monospace;resize:vertical}
+#err{color:#c62828;font-weight:600;font-size:.9rem;min-height:1em}
+button{padding:12px 20px;border:0;border-radius:10px;background:#ff9800;color:#fff;font-size:1rem;font-weight:700;cursor:pointer;box-shadow:0 4px #b36b00}
+button:active{transform:translateY(3px);box-shadow:0 1px #b36b00}
+button:disabled{opacity:.5;cursor:not-allowed}
+button.ghost{background:#546e7a;box-shadow:0 4px #37474f}
+.row{display:flex;gap:8px}
+.row button{flex:1;padding:10px 6px;font-size:.85rem}
+
+#game{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;align-items:flex-start;width:100%}
+#board-wrap{width:min(92vw,620px)}
+#board{position:relative;aspect-ratio:1;border:8px solid #5d4037;border-radius:12px;display:grid;grid-template:repeat(10,1fr)/repeat(10,1fr);box-shadow:0 10px 30px #0008}
+.cell{font-size:clamp(7px,1.6vw,12px);padding:2px;color:#0006;font-weight:700}
+.cell.a{background:#ffe9a8}.cell.b{background:#a8e6cf}
+#svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.token{position:absolute;width:5%;height:5%;border-radius:50%;border:2px solid #fff;box-shadow:0 3px 5px #0009;transition:left .25s,top .25s}
+.token.slide{transition:left 1s ease-in-out,top 1s ease-in-out}
+.token.hop{animation:hop .26s}
+.token.glow{box-shadow:0 0 18px 8px gold}
+@keyframes hop{50%{transform:translateY(-60%) scale(1.15)}}
+#board.shake{animation:shake .5s}
+@keyframes shake{20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+
+#panel{width:min(92vw,260px);display:grid;gap:14px;text-align:center}
+.pl{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;background:#ffffff22;border:2px solid transparent}
+.pl.on{border-color:#fff;background:#ffffff44}
+.dot{width:16px;height:16px;border-radius:50%}
+.pl b{margin-left:auto}
+#status{min-height:44px;font-weight:600}
+
+/* 3D dice */
+.scene{perspective:700px;width:80px;height:80px;margin:14px auto}
+.cube{width:80px;height:80px;position:relative;transform-style:preserve-3d;transition:transform 1.1s cubic-bezier(.2,.8,.3,1)}
+.face{position:absolute;width:80px;height:80px;background:linear-gradient(145deg,#fff,#d9d9d9);border-radius:14px;border:1px solid #aaa;display:grid;grid-template:repeat(3,1fr)/repeat(3,1fr);padding:10px;box-shadow:inset 0 0 10px #0003}
+.pip{width:80%;height:80%;margin:auto;border-radius:50%;background:radial-gradient(circle at 35% 35%,#555,#000)}
+.f1{transform:translateZ(40px)}
+.f6{transform:rotateY(180deg) translateZ(40px)}
+.f2{transform:rotateY(90deg) translateZ(40px)}
+.f5{transform:rotateY(-90deg) translateZ(40px)}
+.f3{transform:rotateX(90deg) translateZ(40px)}
+.f4{transform:rotateX(-90deg) translateZ(40px)}
+
+.confetti{position:fixed;top:-20px;width:10px;height:14px;z-index:20;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
