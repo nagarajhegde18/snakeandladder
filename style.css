@@ -1,5 +1,6 @@
 *{box-sizing:border-box;margin:0}
-body{font-family:system-ui,sans-serif;background:radial-gradient(#2b5876,#1b2a49);color:#fff;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:10px}
+html{height:100%}
+body{font-family:system-ui,sans-serif;background:radial-gradient(#2b5876,#1b2a49);color:#fff;min-height:100vh;min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:10px}
 .overlay{position:fixed;inset:0;background:#000b;display:flex;align-items:center;justify-content:center;z-index:10;padding:10px;overflow:auto}
 .overlay[hidden],#game[hidden]{display:none}
 .card{background:#fff;color:#222;padding:28px;border-radius:18px;text-align:center;display:grid;gap:12px;min-width:280px}
@@ -31,23 +32,60 @@ button.ghost{background:#546e7a;box-shadow:0 4px #37474f}
 @keyframes shake{20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
 
 #panel{width:min(92vw,260px);display:grid;gap:14px;text-align:center}
+#players{display:grid;gap:14px}
 .pl{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;background:#ffffff22;border:2px solid transparent}
 .pl.on{border-color:#fff;background:#ffffff44}
 .dot{width:16px;height:16px;border-radius:50%}
 .pl b{margin-left:auto}
 #status{min-height:44px;font-weight:600}
 
-/* 3D dice */
-.scene{perspective:700px;width:80px;height:80px;margin:14px auto}
-.cube{width:80px;height:80px;position:relative;transform-style:preserve-3d;transition:transform 1.1s cubic-bezier(.2,.8,.3,1)}
-.face{position:absolute;width:80px;height:80px;background:linear-gradient(145deg,#fff,#d9d9d9);border-radius:14px;border:1px solid #aaa;display:grid;grid-template:repeat(3,1fr)/repeat(3,1fr);padding:10px;box-shadow:inset 0 0 10px #0003}
+/* 3D dice (size controlled by --d) */
+.scene{--d:80px;perspective:700px;width:var(--d);height:var(--d);margin:14px auto}
+.cube{width:var(--d);height:var(--d);position:relative;transform-style:preserve-3d;transition:transform 1.1s cubic-bezier(.2,.8,.3,1)}
+.face{position:absolute;width:var(--d);height:var(--d);background:linear-gradient(145deg,#fff,#d9d9d9);border-radius:calc(var(--d)*.18);border:1px solid #aaa;display:grid;grid-template:repeat(3,1fr)/repeat(3,1fr);padding:calc(var(--d)*.125);box-shadow:inset 0 0 10px #0003}
 .pip{width:80%;height:80%;margin:auto;border-radius:50%;background:radial-gradient(circle at 35% 35%,#555,#000)}
-.f1{transform:translateZ(40px)}
-.f6{transform:rotateY(180deg) translateZ(40px)}
-.f2{transform:rotateY(90deg) translateZ(40px)}
-.f5{transform:rotateY(-90deg) translateZ(40px)}
-.f3{transform:rotateX(90deg) translateZ(40px)}
-.f4{transform:rotateX(-90deg) translateZ(40px)}
+.f1{transform:translateZ(calc(var(--d)/2))}
+.f6{transform:rotateY(180deg) translateZ(calc(var(--d)/2))}
+.f2{transform:rotateY(90deg) translateZ(calc(var(--d)/2))}
+.f5{transform:rotateY(-90deg) translateZ(calc(var(--d)/2))}
+.f3{transform:rotateX(90deg) translateZ(calc(var(--d)/2))}
+.f4{transform:rotateX(-90deg) translateZ(calc(var(--d)/2))}
 
 .confetti{position:fixed;top:-20px;width:10px;height:14px;z-index:20;animation:fall linear forwards}
 @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+
+/* ================= MOBILE: portrait, everything fits on one screen ================= */
+@media (max-width:700px) and (orientation:portrait){
+  body{padding:6px;align-items:flex-start}
+  #game{flex-direction:column;flex-wrap:nowrap;align-items:center;gap:8px}
+
+  /* board is limited by BOTH width and remaining height */
+  #board-wrap{width:min(100%, calc(100vh - 235px));width:min(100%, calc(100dvh - 235px));min-width:250px}
+  #board{border-width:5px;border-radius:10px}
+
+  #panel{width:100%;max-width:420px;gap:6px}
+  #players{display:flex;flex-wrap:wrap;gap:6px}
+  .pl{flex:1 1 45%;padding:5px 10px;font-size:.9rem}
+  #status{min-height:0;font-size:.95rem}
+
+  /* small dice + roll button side by side */
+  .scene{--d:48px;margin:6px auto}
+  #rollBtn{padding:10px;font-size:1rem}
+  .row button,#restart{padding:8px 6px;font-size:.78rem;box-shadow:0 3px #37474f}
+  #restart{width:100%}
+}
+
+/* ================= MOBILE: landscape (short screens) ================= */
+@media (max-height:520px) and (orientation:landscape){
+  body{padding:6px;align-items:flex-start}
+  #game{flex-wrap:nowrap;gap:12px;align-items:center;justify-content:center}
+  #board-wrap{width:calc(100vh - 14px);width:calc(100dvh - 14px);flex:none}
+  #board{border-width:5px}
+  #panel{width:min(240px,36vw);gap:5px}
+  #players{display:grid;gap:5px}
+  .pl{padding:4px 10px;font-size:.85rem}
+  #status{min-height:0;font-size:.9rem}
+  .scene{--d:44px;margin:4px auto}
+  #rollBtn{padding:8px}
+  .row button,#restart{padding:6px;font-size:.75rem}
+}
